@@ -20,7 +20,26 @@ Identify the top left corner and bottom right corners of the bounding box of all
 
 Recursively split up boxes using the following approach;
 
-#####  Identify Vertical Splits
+#####  Identify Vertical Segments
 
-... Working through a meeting 
+Move from left to right and identify any columns that do not contain any blank pixels (1's).  This should be extremely fast since each column is a BitSlotMap (aka BitVector, integer number).  
 
+#####  Identify Horizontal Segments
+
+Move from top to bottom and identify any rows that do not contain any blank pixels (1's).  This should be extremely fast since each row is also a BitSlotMap (aka BitVector, integer number).  
+
+#####  Identify Subtracted boxes
+
+Move from top left to bottom right in a diagonal fashion, looking for boxes in all four directions.  Any subtractable Box is a hit and should be noted.  Exit after a single subtractable box is found.  Then move down one pixel and continue, and then to the right of the center and continue. Iterate until all pixels have been checked for subtractable boxes. 
+
+## Store Bounding Boxes in JSON
+
+Store all the bounding boxes in a JSON structure. 
+
+## Single character identification. 
+
+Concurrently, take all of the bounding boxes and identify a single character using AI.  The output of this should be LaTeX. 
+
+## Final equation submission. 
+
+Take the original content box's BitSlotMap, in the JSON with the LaTeX included, and submit it as a document to the final machine learning algorithm.
